@@ -7,8 +7,8 @@
 #' passage probabilities and uncertainty in life-history information.
 #'
 #' @param species Species for which population dynamics will be simulated.
-#' Choices include American shad (\code{"AMS"}), alewife (\code{"ALE"}), and
-#' blueback herring (\code{"BBH"}).
+#' Choices include American shad (\code{"AMS"}), alewife (\code{"ALE"}), 
+#' blueback herring (\code{"BBH"}), and Atlantic salmon (\code{"SAL"}).
 #'
 #' @param river River basin. Available rivers implemented in package
 #' can be viewed by calling \code{\link{get_rivers}} with no arguments
@@ -180,7 +180,7 @@
 #' @export
 #'
 sim_pop <- function(
-    species = c("ALE", "AMS", "BBH"),
+    species = c("ALE", "AMS", "BBH", "SAL"),
     nyears = 50,
     river,
     max_age = NULL,
@@ -204,13 +204,13 @@ sim_pop <- function(
   if (missing(species)) {
     stop("
 
-    Argument 'species' must be one of 'ALE', 'AMS', or 'BBH'.")
+    Argument 'species' must be one of 'ALE', 'AMS', 'BBH', or 'SAL'.")
   }
 
-  if (!species %in% c("ALE", "AMS", "BBH")) {
+  if (!species %in% c("ALE", "AMS", "BBH", "SAL")) {
     stop("
 
-    Argument 'species' must be one of 'ALE', 'AMS', or 'BBH'.")
+    Argument 'species' must be one of 'ALE', 'AMS', 'BBH', or 'SAL'.")
   }
 
   # River error handling
