@@ -223,13 +223,18 @@ sim_pop <- function(
     in custom_habitat if used.")
   }
 
-  if (!river %in% get_rivers(species) & is.null(custom_habitat)) {
+  if (species!="SAL" && !river %in% get_rivers(species) && is.null(custom_habitat)) {
     stop("
 
     Argument 'river' must be one of those included in get_rivers() or in
     custom_habitat if used.
 
     To see a list of available rivers, run get_rivers()")
+  }
+  
+  if (species == "SAL" && is.null(custom_habitat)){
+    stop("
+    For species = 'SAL', custom_habitat must currently be supplied.")
   }
 
   # Make a hidden environment so it is easier
