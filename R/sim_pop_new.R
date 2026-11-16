@@ -248,12 +248,26 @@ sim_pop <- function(
   .sim_pop$output_years <- match.arg(output_years)
 
   # Get region for river system
-  .sim_pop$region <- get_region(
-    river = .sim_pop$river,
-    species = .sim_pop$species,
-    custom_habitat = .sim_pop$custom_habitat
-  )
-
+  if (species == "SAL") {
+    
+    sal_region <- unique(.sim_pop$custom_habitat$region)
+    
+    if (length(sal_region) != 1) {
+      stop("
+    Atlantic salmon custom_habitat must contain exactly one region.")
+    }
+    
+    .sim_pop$region <- sal_region
+    
+  } else {
+    
+    .sim_pop$region <- get_region(
+      river = .sim_pop$river,
+      species = .sim_pop$species,
+      custom_habitat = .sim_pop$custom_habitat
+    )
+    
+  }
   # Get governmental unit
   .sim_pop$govt <- get_govt(.sim_pop$river, .sim_pop$species,
     custom_habitat = .sim_pop$custom_habitat
