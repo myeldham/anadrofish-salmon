@@ -269,9 +269,27 @@ sim_pop <- function(
     
   }
   # Get governmental unit
-  .sim_pop$govt <- get_govt(.sim_pop$river, .sim_pop$species,
-    custom_habitat = .sim_pop$custom_habitat
-  )
+  if (species == "SAL") {
+    
+    sal_govt <- unique(.sim_pop$custom_habitat$govt)
+    
+    if (length(sal_govt) != 1) {
+      stop("
+    Atlantic salmon custom_habitat must contain exactly one governmental unit.")
+    }
+    
+    .sim_pop$govt <- sal_govt
+    
+  } else {
+    
+    .sim_pop$govt <- get_govt(
+      .sim_pop$river,
+      .sim_pop$species,
+      custom_habitat = .sim_pop$custom_habitat
+    )
+    
+  }
+  
 
   # Get life-history parameters if not specified
   if (sex_specific == FALSE) {
