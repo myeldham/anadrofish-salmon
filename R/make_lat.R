@@ -7,8 +7,8 @@
 #' \code{\link{get_rivers}}.
 #'
 #' @param species Species for which population dynamics will be simulated.
-#' Choices include American shad (\code{"AMS"}), alewife (\code{"ALE"}), and
-#' blueback herring (\code{"BBH"}).
+#' Choices include American shad (\code{"AMS"}), alewife (\code{"ALE"}), 
+#' blueback herring (\code{"BBH"}), and Atlantic salmon (\code{"SAL"}).
 #'
 #' @param custom_habitat A dataframe containing columns corresponding to the
 #' those in the output from custom_habitat_template(). NEED TO ADD LINK.
@@ -17,20 +17,20 @@
 #'
 #' @export
 #'
-make_lat <- function(river, species = c("AMS", "ALE", "BBH"),
+make_lat <- function(river, species = c("AMS", "ALE", "BBH", "SAL"),
                      custom_habitat = NULL) {
   # Error handling
   # Species error handling
   if (missing(species)) {
     stop("
 
-    Argument 'species' must be one of 'ALE', 'AMS', or 'BBH'.")
+    Argument 'species' must be one of 'ALE', 'AMS', 'BBH', or 'SAL'.")
   }
 
-  if (!species %in% c("ALE", "AMS", "BBH")) {
+  if (!species %in% c("ALE", "AMS", "BBH", "SAL")) {
     stop("
 
-    Argument 'species' must be one of 'ALE', 'AMS', or 'BBH'.")
+    Argument 'species' must be one of 'ALE', 'AMS', 'BBH', or 'SAL'.")
   }
 
   # River error handling
@@ -43,13 +43,20 @@ make_lat <- function(river, species = c("AMS", "ALE", "BBH"),
     in custom_habitat if used.")
   }
 
-  if (!river %in% get_rivers(species) & is.null(custom_habitat)) {
+  if (species != "SAL" &&
+      !river %in% get_rivers(species) &&
+      is.null(custom_habitat)) {
     stop("
 
     Argument 'river' must be one of those included in get_rivers() or in
     custom_habitat if used.
 
     To see a list of available rivers, run get_rivers()")
+  }
+  
+  if (species == "SAL" && is.null(custom_habitat)) {
+    stop("
+  For species = 'SAL', custom_habitat must currently be supplied.")
   }
 
   if (is.null(custom_habitat)) {
